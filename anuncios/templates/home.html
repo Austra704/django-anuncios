@@ -1,28 +1,29 @@
 {% extends 'base.html' %}
 {% load static %}
 
-
 {% block conteudo %}
-
-<div class="ui three column stackable grid">
-    {% for anuncio in anuncios %}
-<div class="column">
-    <div class="ui fluid card">
-      <div class="image">
-        <img src="{% static 'anuncios/img/image.png' %}">
-      </div>
-      <div class="content">
-        <a href="{% url 'anuncio' anuncio.id %}" class="header">{{ anuncio }}</a>
-      </div>
-      <div class="extra content">
-          R$ {{ anuncio.preco }}
-      </div>
+    <div class="ui three column stackable grid">
+        {% for anuncio in anuncios %}
+            <div class="column">
+                <div class="ui fluid card">
+                    <div class="image">
+                        <img src="{% static 'anuncios/img/image.png' %}">
+                    </div>
+                    <div class="content">
+                        <a href="{% url 'anuncio' anuncio.id %}" class="header">{{ anuncio }}</a>
+                        {% if anuncio.categoria %}
+                            <div class="meta">{{ anuncio.categoria.titulo }}</div>
+                        {% else %}
+                            <div class="meta">Categoria: Não especificada</div>
+                        {% endif %}
+                    </div>
+                    <div class="extra content">
+                        R$ {{ anuncio.preco }}
+                    </div>
+                </div>
+            </div>
+        {% empty %}
+            <p>Nenhum anúncio encontrado!</p>
+        {% endfor %}
     </div>
-</div>
-    {% empty %}
-        <p>Nenhum anúncio encontrado!</p>
-    {% endfor %}
-
-</div>
-
 {% endblock %}
